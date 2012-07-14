@@ -1,0 +1,14 @@
+
+
+target
+#.project
+#.classpath
+#.settings
+#.springBeans
+
+*.iml
+/.idea/
+bin/
+*.log
+
+db.properties
