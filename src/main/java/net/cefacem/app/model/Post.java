@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table (name="POSTS")
@@ -25,13 +28,12 @@ public class Post {
 	private int postId;
 	private User user;
 	private String content;
-	private Date eventDate;
-	private Date eventTime;
+	private Date eventDateTime;	
+	private int votesUp = 0;
+	private int votesDown = 0;
+	private double score = 0;
 	private Date creationDate = new Date();
 	private Date lastEdited;
-	private int votesUp;
-	private int votesDown;
-	private double score;
 	private List<Comment> commentsList = new ArrayList<Comment>();
 	
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
@@ -43,7 +45,7 @@ public class Post {
 		this.postId = postId;
 	}
 	
-	@ManyToOne (fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="user_id")
 	public User getUser() {
 		return user;
@@ -54,6 +56,7 @@ public class Post {
 	
 	@Lob
 	@Column (nullable = false)
+	@NotEmpty(message="{validation.notblank}")
 	public String getContent() {
 		return content;
 	}
@@ -61,22 +64,15 @@ public class Post {
 		this.content = content;
 	}
 	
-	@Column (name="event_date")
-	@Temporal(TemporalType.DATE)
-	public Date getEventDate() {
-		return eventDate;
+	@Column (name="event_date_time", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull(message="{validation.notblank}")
+	@Future(message="{validation.date.future}")
+	public Date getEventDateTime() {
+		return eventDateTime;
 	}
-	public void setEventDate(Date eventDate) {
-		this.eventDate = eventDate;
-	}
-	
-	@Column (name="event_time")
-	@Temporal(TemporalType.TIME)
-	public Date getEventTime() {
-		return eventTime;
-	}
-	public void setEventTime(Date eventTime) {
-		this.eventTime = eventTime;
+	public void setEventDateTime(Date eventDateTime) {
+		this.eventDateTime = eventDateTime;
 	}
 	
 	@Column (name="creation_date")

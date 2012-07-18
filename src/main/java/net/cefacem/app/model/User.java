@@ -40,8 +40,8 @@ public class User {
 	}
 	
 	@Column (name="username", nullable = false, length = 30, unique=true)
-	@NotBlank(message="nu poate fi gol")
-	@Length(min=3, max=30, message="trebuie sa fie intre 3 si 30 de caractere")
+	@NotBlank(message="{validation.notblank}")
+	@Length(min=3, max=30, message="{validation.username.length}")
 	public String getUserName() {
 		return userName;
 	}
@@ -50,8 +50,8 @@ public class User {
 	}
 	
 	@Column (nullable = false)
-	@NotBlank(message="nu poate fi gol")
-	@Length(min=3,  message="minim 3 caractere")
+	@NotBlank(message="{validation.notblank}")
+	@Length(min=6,  message="{validation.password.length}")
 	public String getPassword() {
 		return password;
 	}
@@ -60,8 +60,8 @@ public class User {
 	}
 	
 	@Column (nullable = false, length = 50)
-	@NotBlank(message="nu poate fi gol")
-	@Email(message="format incorect")
+	@NotBlank(message="{validation.notblank}")
+	@Email(message="{validation.email.format}")
 	public String getEmail() {
 		return email;
 	}

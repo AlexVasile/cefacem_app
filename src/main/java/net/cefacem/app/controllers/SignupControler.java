@@ -1,11 +1,14 @@
 package net.cefacem.app.controllers;
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import net.cefacem.app.model.User;
 import net.cefacem.app.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,8 @@ public class SignupControler {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessageSource messages;
 	
 	@RequestMapping(value="signup", method=RequestMethod.GET)
 	public String onGet(Model model) {
@@ -25,7 +30,7 @@ public class SignupControler {
 	}
 	
 	@RequestMapping(value="signup", method=RequestMethod.POST)
-	public String onSubmit(Model model, @Valid User newUser, BindingResult result) {
+	public String onSubmit(Model model, @Valid User newUser, BindingResult result, Locale loc) {
 		if (result.hasErrors()) {
 			return "signup";
 		}
@@ -34,7 +39,8 @@ public class SignupControler {
 				return "redirect:/";
 			}
 			else {
-				model.addAttribute("userErrMessage", "UserName-ul este deja folosit");
+				model.addAttribute("userErrMessage", 
+									messages.getMessage("signup.user.exists", null, loc));
 				return "signup";
 			}
 		}

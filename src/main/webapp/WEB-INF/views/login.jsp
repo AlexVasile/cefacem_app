@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -16,33 +17,18 @@
 
 <body>
 
-	<form method="post" id="login" action="j_spring_security_check" >
-      <table>
-      	<tr>
-      		<td>${error}</td>
-      	</tr>
-        <tr>
-          <td>
-            <label for="username">Username: </label>
-          </td>
-          <td>
-            <input type="text" name="j_username" id="username" required="required"/>
-          </td>
-        </tr>
+	<a href="?lang=ro">ro</a> | <a href="?lang=en">en</a>
 
-        <tr>
-          <td>
-            <label for="password">Parola: </label>
-          </td>
-          <td>
-            <input type="password" name="j_password" id="password" required="required" />
-          </td>
-          <td>
-          	
-          </td>
-        </tr>
-      </table>
-      <input type="submit" value="Autentifica-te" />
+	<form method="post" id="login" action="j_spring_security_check" >
+		${error}
+		<br>
+        <label for="username"> <fmt:message key="label.username"/> </label>
+        <input type="text" name="j_username" id="username" />
+		<br>
+        <label for="password"> <fmt:message key="label.password"/> </label>
+        <input type="password" name="j_password" id="password" />
+		<br>
+      <input type="submit" value="<fmt:message key="button.login"/>" />
     </form>
 	
 </body>

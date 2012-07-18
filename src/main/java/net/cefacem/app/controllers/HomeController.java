@@ -3,8 +3,8 @@ package net.cefacem.app.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import net.cefacem.app.model.User;
-import net.cefacem.app.service.UserService;
+import net.cefacem.app.model.Post;
+import net.cefacem.app.service.PostService;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -23,15 +23,15 @@ public class HomeController {
 	//private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private UserService userService;
+	private PostService postService;
 
 	@RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
 	public String home(Model model, Principal principal) {	
 		
 		if (principal != null)
 			model.addAttribute("logged_user", principal.getName());
-		List<User> users = userService.getAllUsers();
-		model.addAttribute("users", users);
+		List<Post> posts = postService.findAllPosts();
+		model.addAttribute("posts", posts);
 		
 		return "home";
 	}

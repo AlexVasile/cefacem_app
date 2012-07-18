@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -14,18 +14,21 @@
 </head>
 
 <body>
-	<a id="login" href="login">Autentifica-te</a> |
-	<a id="signup" href="signup">Inregistreaza-te</a> |
-	<p>${logged_user} | <a id="logout" href="j_spring_security_logout">logout</a> </p>
+	 <a href="?lang=ro">ro</a> | <a href="?lang=en">en</a>
+	<h3> <fmt:message key="label.welcome"/> </h3>
+	
+	<a id="login" href="login"> <fmt:message key="label.login"/> </a> |
+	<a id="signup" href="signup"> <fmt:message key="label.signup"/> </a> |
+	<a id="post" href="post"> <fmt:message key="label.post"/> </a>
+	<p>${logged_user} | <a id="logout" href="j_spring_security_logout"> 
+		<fmt:message key="label.logout"/> </a> </p>
 	<br>
 	<table>
-      <c:forEach var="user" items="${users}">
+      <c:forEach var="post" items="${posts}">
         <tr>
-          <td>${user.userId}</td>
-          <td>${user.userName}</td>
-          <td>${user.email}</td>
-          <td>${user.creationDate}</td>
-          <td>${user.password}</td>
+          <td>${post.content}</td>
+          <td>| ${post.eventDateTime} |</td>
+          <td>${post.user.userName}</td>
         </tr>
       </c:forEach>
     </table>
