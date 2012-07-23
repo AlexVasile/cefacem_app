@@ -16,14 +16,15 @@
 
 <body>
 
-	${post.eventDateTime}
+	${comment.content}
 	<br>
-	${post.content}
+	${comment.user.userName}
 	<br>
-	${post.user.userName}
+	${comment.creationDate}
 	<br>
-	<c:if test="${post.user.userName == logged_user}">
-		<a href="/cefacem/posts/${post.postId}/edit"> <fmt:message key="label.edit" /> </a>
+	<c:if test="${comment.user.userName == logged_user}">
+		<a href="/cefacem/posts/${comment.post.postId}/comments/${comment.commentId}/edit"> 
+				<fmt:message key="label.edit" /> </a>
 	</c:if>
 	
 </body>

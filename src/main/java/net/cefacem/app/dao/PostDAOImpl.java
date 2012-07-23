@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import net.cefacem.app.model.Post;
 
 @Repository
-public class PostDAOImpl extends GenericDAOImpl<Post, Integer> implements PostDAO {
+public class PostDAOImpl extends GenericDAOImpl<Post, Long> implements PostDAO {
 
 	@Override
 	protected Class<Post> getEntityClass() {

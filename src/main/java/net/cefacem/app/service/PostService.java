@@ -9,12 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface PostService {
 	
-	public int addPost(Post post);
+	public long addPost(Post post, String creatorUserName);
 	public void addOrUpdatePost(Post post);
-	public Post merge(Post post);
+	public Post merge(Post oldPost, Post editedPost);
 	public void delete(Post post);
-	public Post findById(int id);
+	public Post findById(long id);
 	public List<Post> findAllPosts();
+	public List<Post> findAllPostsOfUser(String userName);
 	
 	
 }

@@ -7,9 +7,7 @@ import java.util.Date;
 import javax.validation.Valid;
 
 import net.cefacem.app.model.Post;
-import net.cefacem.app.model.User;
 import net.cefacem.app.service.PostService;
-import net.cefacem.app.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -27,8 +25,6 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
-	@Autowired
-	private UserService userService;
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -51,29 +47,25 @@ public class PostController {
 			return "post";
 		}
 		else {
-			User user = userService.findByUsername(principal.getName());
-			newPost.setUser(user);
-			int postId = postService.addPost(newPost);
+			long postId = postService.addPost(newPost, principal.getName());
 			return "redirect:/posts/" + postId;
 		}
 	}
 	
 	@RequestMapping(value="/posts/{id:\\d+}", method=RequestMethod.GET)
-	public String postPermalink(@PathVariable int id, Model model, Principal principal) {
+	public String postPermalink(@PathVariable long id, Model model, Principal principal) {
 		Post post = postService.findById(id);
 		if (post != null) {
 			model.addAttribute("post", post);
-			//only the creator of the post can edit it
-			if (post.getUser().getUserName().equals(principal.getName()))
-				model.addAttribute("edit", "edit");
+			model.addAttribute("logged_user", principal.getName());
 			return "post_view";
 		}
 		else
-			return "redirect:/home";
+			return "404";
 	}
 	
 	@RequestMapping(value="/posts/{id:\\d+}/edit", method=RequestMethod.GET)
-	public String postEditOnGet(@PathVariable int id, Model model, Principal principal) {
+	public String postEditOnGet(@PathVariable long id, Model model, Principal principal) {
 		Post post = postService.findById(id);
 		if (post != null) {
 			if (post.getUser().getUserName().equals(principal.getName())) {
@@ -84,11 +76,11 @@ public class PostController {
 				return "redirect:/no_permission_to_edit";
 		}
 		else
-			return "redirect:/home";
+			return "404";
 	}
 	
 	@RequestMapping(value="/posts/{id:\\d+}/edit", method=RequestMethod.POST)
-	public String postEditOnPost(@PathVariable int id, Model model, Principal principal,
+	public String postEditOnPost(@PathVariable long id, Model model, Principal principal,
 								@Valid Post editedPost, BindingResult result) {
 		
 		Post oldPost = postService.findById(id);
@@ -98,10 +90,7 @@ public class PostController {
 					return "post_edit";
 				}
 				else {
-					oldPost.setLastEdited(new Date());
-					oldPost.setContent(editedPost.getContent());
-					oldPost.setEventDateTime(editedPost.getEventDateTime());
-					postService.merge(oldPost);
+					postService.merge(oldPost, editedPost);
 					return "redirect:/posts/" + id;
 				}
 			}
@@ -109,6 +98,6 @@ public class PostController {
 				return "redirect:/no_permission_to_edit";
 		}
 		else
-			return "redirect:/home";
+			return "404";
 	}
 }

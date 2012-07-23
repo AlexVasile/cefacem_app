@@ -25,7 +25,7 @@ public class HomeController {
 	@Autowired
 	private PostService postService;
 
-	@RequestMapping(value = {"/", "index", "home"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/index", "/home"}, method = RequestMethod.GET)
 	public String home(Model model, Principal principal) {	
 		
 		if (principal != null)

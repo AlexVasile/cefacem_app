@@ -22,20 +22,21 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table (name="USERS")
 public class User {
 		
-	private int userId;
+	private long userId;
 	private String userName;
 	private String email;
 	private String password;
 	private Date creationDate = new Date();
 	private List<Post> postsList = new ArrayList<Post>();
 	private List<Comment> commentsList = new ArrayList<Comment>();
+	private List<Vote> votesList = new ArrayList<Vote>();
 	
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
 	@Column (name="user_id")
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	
@@ -92,6 +93,14 @@ public class User {
 	}
 	public void setCommentsList(List<Comment> commentsList) {
 		this.commentsList = commentsList;
+	}
+	
+	@OneToMany (mappedBy="user")
+	public List<Vote> getVotesList() {
+		return votesList;
+	}
+	public void setVotesList(List<Vote> votesList) {
+		this.votesList = votesList;
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,28 +14,30 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table (name="COMMENTS")
 public class Comment {
 	
-	private int commentId;
+	private long commentId;
 	private User user;
 	private Post post;
 	private String content;
-	private Date creationDate;
+	private Date creationDate = new Date();
 	private Date lastEdited;
 	private int votesUp;
 	
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
 	@Column (name="comment_id")
-	public int getCommentId() {
+	public long getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(int commentId) {
+	public void setCommentId(long commentId) {
 		this.commentId = commentId;
 	}
 	
-	@ManyToOne (fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="user_id", nullable = false)
 	public User getUser() {
 		return user;
@@ -45,7 +46,7 @@ public class Comment {
 		this.user = user;
 	}
 	
-	@ManyToOne (fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="post_id", nullable = false)
 	public Post getPost() {
 		return post;
@@ -56,6 +57,7 @@ public class Comment {
 	
 	@Lob
 	@Column (nullable = false)
+	@NotEmpty(message="{validation.notblank}")
 	public String getContent() {
 		return content;
 	}

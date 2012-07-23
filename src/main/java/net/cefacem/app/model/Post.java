@@ -25,23 +25,25 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table (name="POSTS")
 public class Post {
 
-	private int postId;
+	private long postId;
 	private User user;
 	private String content;
 	private Date eventDateTime;	
 	private int votesUp = 0;
 	private int votesDown = 0;
+	private int simpleScore = 0;  //votesUp - votesDown
 	private double score = 0;
 	private Date creationDate = new Date();
 	private Date lastEdited;
 	private List<Comment> commentsList = new ArrayList<Comment>();
+	private List<Vote> votesList = new ArrayList<Vote>();
 	
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
 	@Column (name="post_id")
-	public int getPostId() {
+	public long getPostId() {
 		return postId;
 	}
-	public void setPostId(int postId) {
+	public void setPostId(long postId) {
 		this.postId = postId;
 	}
 	
@@ -109,6 +111,14 @@ public class Post {
 		this.votesDown = votesDown;
 	}
 	
+	@Column (name="simple_score")
+	public int getSimpleScore() {
+		return simpleScore;
+	}
+	public void setSimpleScore(int simpleScore) {
+		this.simpleScore = simpleScore;
+	}
+	
 	public double getScore() {
 		return score;
 	}
@@ -122,6 +132,14 @@ public class Post {
 	}
 	public void setCommentsList(List<Comment> commentsList) {
 		this.commentsList = commentsList;
+	}
+	
+	@OneToMany (mappedBy="post")
+	public List<Vote> getVotesList() {
+		return votesList;
+	}
+	public void setVotesList(List<Vote> votesList) {
+		this.votesList = votesList;
 	}
 	
 }

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userDao.delete(user);
 	}
 	
-	public User findById(int id) {
+	public User findById(long id) {
 		return userDao.findById(id);
 	}
 	

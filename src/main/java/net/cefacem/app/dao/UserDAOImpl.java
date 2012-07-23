@@ -6,7 +6,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDAOImpl extends GenericDAOImpl<User, Integer> implements UserDAO {
+public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 
 	@Override
 	protected Class<User> getEntityClass() {

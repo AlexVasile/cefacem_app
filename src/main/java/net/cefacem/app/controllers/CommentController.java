@@ -1,0 +1,121 @@
+package net.cefacem.app.controllers;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
+import net.cefacem.app.model.Comment;
+import net.cefacem.app.model.Post;
+import net.cefacem.app.service.CommentService;
+import net.cefacem.app.service.PostService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class CommentController {
+	
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private CommentService commentService;
+	
+	@RequestMapping(value="/posts/{id:\\d+}/comments", method=RequestMethod.GET)
+	public String onGetComments(@PathVariable long id, Model model, Principal principal) {
+		Post post = postService.findById(id);
+		if (post != null) {
+			model.addAttribute("logged_user", principal.getName());
+			model.addAttribute("post", post);
+			model.addAttribute("comments", commentService.findAllCommentsOfPost(id));
+			model.addAttribute("comment", new Comment());
+			return "comments_view";
+		}
+		else
+			return "404";
+	}
+	
+	@RequestMapping(value="/posts/{postId:\\d+}/comments", method=RequestMethod.POST)
+	public String onPostComment(@PathVariable long postId, Model model, 
+				@Valid Comment newComment, BindingResult result, Principal principal) {
+		
+		Post post = postService.findById(postId);
+		if (post != null) {
+			if (result.hasErrors()) {
+				model.addAttribute("logged_user", principal.getName());
+				model.addAttribute("post", post);
+				model.addAttribute("comments", commentService.findAllCommentsOfPost(postId));
+				return "comments_view";
+			}
+			else {
+				commentService.addComment(newComment, principal.getName(), postId);
+				return "redirect:/posts/" + postId + "/comments";
+			}
+		}
+		else 
+			return "404";
+	}
+	
+	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}/edit",
+					method=RequestMethod.GET)
+	public String onGetCommentEdit(@PathVariable long postId, @PathVariable long commentId, 
+									Model model, Principal principal) {
+		
+		Comment comment = commentService.findById(commentId);
+		Post post = postService.findById(postId);
+		if (comment != null && post != null && post.getPostId() == comment.getPost().getPostId()) {
+			if (comment.getUser().getUserName().equals(principal.getName())) {
+				model.addAttribute("logged_user", principal.getName());
+				model.addAttribute("post", post);
+				model.addAttribute("comments", commentService.findAllCommentsOfPost(postId));
+				model.addAttribute("comment", comment);
+				return "comment_edit";
+			}
+			else 
+				return "redirect:/no_permission_to_edit";
+		}
+		else 
+			return "404";
+	}
+	
+	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}/edit", 
+						method=RequestMethod.POST)
+	public String onPostCommentEdit(@PathVariable long postId, @PathVariable long commentId,
+			Model model, Principal principal, @Valid Comment editedComment, BindingResult result) {
+		
+		Comment oldComment = commentService.findById(commentId);
+		Post post = postService.findById(postId);
+		if (oldComment != null && post != null && post.getPostId() == oldComment.getPost().getPostId()) {
+			if (result.hasErrors()) {
+				model.addAttribute("logged_user", principal.getName());
+				model.addAttribute("post", post);
+				model.addAttribute("comments", commentService.findAllCommentsOfPost(postId));
+				return "comment_edit";
+			}
+			else {
+				commentService.merge(oldComment, editedComment);
+				return "redirect:/posts/" + postId + "/comments";
+			}
+		}
+		else		
+			return "404";
+	}
+
+	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}", method=RequestMethod.GET)
+	public String commentPermalink(@PathVariable long postId, @PathVariable long commentId, 
+									Model model, Principal principal) {
+		
+		Comment comment = commentService.findById(commentId);
+		if (comment != null) {
+			model.addAttribute("comment", comment);
+			model.addAttribute("logged_user", principal.getName());
+			return "comment_view";
+		}
+		else 
+			return "404";
+	}
+}

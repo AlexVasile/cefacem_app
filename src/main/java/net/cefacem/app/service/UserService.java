@@ -13,7 +13,7 @@ public interface UserService {
 	public void addOrUpdateUser(User user);
 	public User merge(User user);
 	public void delete(User user);
-	public User findById(int id);
+	public User findById(long id);
 	public List<User> getAllUsers();
 	public User findByUsername(String username);
 	

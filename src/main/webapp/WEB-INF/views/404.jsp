@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -15,16 +14,7 @@
 </head>
 
 <body>
-
-	${post.eventDateTime}
-	<br>
-	${post.content}
-	<br>
-	${post.user.userName}
-	<br>
-	<c:if test="${post.user.userName == logged_user}">
-		<a href="/cefacem/posts/${post.postId}/edit"> <fmt:message key="label.edit" /> </a>
-	</c:if>
-	
+ 	<h1>HTTP 404 Error: Page not Found</h1>
+ 	<p><a href="/cefacem/home"><fmt:message key="label.home" /></a></p>
 </body>
 </html>
