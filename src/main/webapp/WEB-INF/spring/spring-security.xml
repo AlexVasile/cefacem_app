@@ -17,6 +17,7 @@
     	<intercept-url pattern="/home" access="permitAll" />
     	<intercept-url pattern="/index" access="permitAll" />
     	<intercept-url pattern="/signup" access="permitAll" />
+    	<intercept-url pattern="/change_language" access="permitAll" />
     	<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
     	
 		<form-login login-page="/login" 
@@ -26,7 +27,7 @@
         <remember-me key="rememberMeSecretKey" services-ref="rememberMeServices" />
   	</http>
     
-	<authentication-manager>
+	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="userServiceImpl">
 			<password-encoder ref="passwordEncoder">
 				<salt-source user-property="username" />

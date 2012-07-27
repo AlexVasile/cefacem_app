@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>  </title>
+    <title> <fmt:message key="title.post_edit" /> </title>
     
     <link rel="stylesheet" type="text/css" href="/cefacem/resources/css/smoothness/jquery-ui-1.8.20.custom.css" />
     <link rel="stylesheet" type="text/css" href="/cefacem/resources/css/jquery-ui-timepicker-addon.css" />
@@ -28,8 +28,6 @@
 </head>
 
 <body>
-
-	<a href="?lang=ro">ro</a> | <a href="?lang=en">en</a>
 
 	<form:form method="post" commandName="post">
 		<label for="date"> <fmt:message key="label.dateTime" /> </label>

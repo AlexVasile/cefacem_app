@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> Ce facem azi? </title>
+    <title> <fmt:message key="title.home" /> </title>
     
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
@@ -14,19 +14,19 @@
 </head>
 
 <body>
-	 <a href="?lang=ro">ro</a> | <a href="?lang=en">en</a>
+	 <a href="/cefacem/change_language?lang=ro">ro</a> | <a href="/cefacem/change_language?lang=en">en</a>
 	<h3> <fmt:message key="label.welcome"/> </h3>
 	
 	<c:if test="${empty logged_user}">
-		<a id="login" href="login"> <fmt:message key="label.login"/> </a> |
-		<a id="signup" href="signup"> <fmt:message key="label.signup"/> </a> |
+		<a id="login" href="/cefacem/login"> <fmt:message key="label.login"/> </a> |
+		<a id="signup" href="/cefacem/signup"> <fmt:message key="label.signup"/> </a> |
 	</c:if>
 	<c:if test="${not empty logged_user}">
-		${logged_user} | <a id="logout" href="j_spring_security_logout"> 
+		${logged_user} | <a id="logout" href="/cefacem/j_spring_security_logout"> 
 			<fmt:message key="label.logout"/> </a> |
 	</c:if>
 	
-	<a id="post" href="post"> <fmt:message key="label.post"/> </a> 
+	<a id="post" href="/cefacem/post"> <fmt:message key="label.post"/> </a> 
 	<br><br><br>
 	
 	<table border="1">
@@ -47,6 +47,16 @@
         </tr>
       </c:forEach>
     </table>
+    
+    
+    <c:if test="${prev == 'y'}" >
+    	<a href="/cefacem/page?start=${prev_end - page_length}&end=${prev_end}"> 
+    		<fmt:message key="label.previous" /> </a>
+    </c:if> |
+    <c:if test="${next == 'y'}" >
+    	<a href="/cefacem/page?start=${next_start}&end=${next_start + page_length}"> 
+    		<fmt:message key="label.next" /> </a>
+    </c:if>
     
 </body>
 </html>

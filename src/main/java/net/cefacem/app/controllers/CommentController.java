@@ -25,7 +25,7 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
-	@RequestMapping(value="/posts/{id:\\d+}/comments", method=RequestMethod.GET)
+	@RequestMapping(value={"/posts/{id:\\d+}/comments", "/posts/{id:\\d+}"}, method=RequestMethod.GET)
 	public String onGetComments(@PathVariable long id, Model model, Principal principal) {
 		Post post = postService.findById(id);
 		if (post != null) {
@@ -39,7 +39,7 @@ public class CommentController {
 			return "404";
 	}
 	
-	@RequestMapping(value="/posts/{postId:\\d+}/comments", method=RequestMethod.POST)
+	@RequestMapping(value={"/posts/{postId:\\d+}/comments", "/posts/{postId:\\d+}"}, method=RequestMethod.POST)
 	public String onPostComment(@PathVariable long postId, Model model, 
 				@Valid Comment newComment, BindingResult result, Principal principal) {
 		
@@ -53,7 +53,7 @@ public class CommentController {
 			}
 			else {
 				commentService.addComment(newComment, principal.getName(), postId);
-				return "redirect:/posts/" + postId + "/comments";
+				return "redirect:/posts/" + postId;
 			}
 		}
 		else 

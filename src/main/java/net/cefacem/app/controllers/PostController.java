@@ -52,17 +52,17 @@ public class PostController {
 		}
 	}
 	
-	@RequestMapping(value="/posts/{id:\\d+}", method=RequestMethod.GET)
-	public String postPermalink(@PathVariable long id, Model model, Principal principal) {
-		Post post = postService.findById(id);
-		if (post != null) {
-			model.addAttribute("post", post);
-			model.addAttribute("logged_user", principal.getName());
-			return "post_view";
-		}
-		else
-			return "404";
-	}
+//	@RequestMapping(value="/posts/{id:\\d+}", method=RequestMethod.GET)
+//	public String postPermalink(@PathVariable long id, Model model, Principal principal) {
+//		Post post = postService.findById(id);
+//		if (post != null) {
+//			model.addAttribute("post", post);
+//			model.addAttribute("logged_user", principal.getName());
+//			return "post_view";
+//		}
+//		else
+//			return "404";
+//	}
 	
 	@RequestMapping(value="/posts/{id:\\d+}/edit", method=RequestMethod.GET)
 	public String postEditOnGet(@PathVariable long id, Model model, Principal principal) {

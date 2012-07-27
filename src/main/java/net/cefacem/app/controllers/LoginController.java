@@ -2,6 +2,8 @@ package net.cefacem.app.controllers;
 
 import java.util.Locale;
 
+import net.cefacem.app.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ public class LoginController {
 		else {
 			model.addAttribute("error", "");
 		}
+		model.addAttribute("user", new User());
+		
 		return "login";
 	}
 	

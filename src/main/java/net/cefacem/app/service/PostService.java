@@ -17,5 +17,4 @@ public interface PostService {
 	public List<Post> findAllPosts();
 	public List<Post> findAllPostsOfUser(String userName);
 	
-	
 }

@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> Inregistreaza-te </title>
+    <title> <fmt:message key="tilte.signup" /> </title>
     
     <link rel="stylesheet" href="">
     
@@ -19,7 +19,7 @@
 
 <body>
 
-	<a href="?lang=ro">ro</a> | <a href="?lang=en">en</a>
+	<a href="/cefacem/change_language?lang=ro">ro</a> | <a href="/cefacem/change_language?lang=en">en</a>
 		
 	<form:form method="post" action="signup" commandName="user">
       <table>
