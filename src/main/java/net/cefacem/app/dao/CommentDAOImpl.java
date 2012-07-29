@@ -19,6 +19,7 @@ public class CommentDAOImpl extends GenericDAOImpl<Comment, Long> implements Com
 	public List<Comment> findByPostId(long postId) {
 		Query query = getSession().createQuery("from Comment where post.postId = :postId");
 		query.setParameter("postId", postId);
+		query.setCacheable(true);
 		return (List<Comment>) query.list();
 	}
 
@@ -26,6 +27,7 @@ public class CommentDAOImpl extends GenericDAOImpl<Comment, Long> implements Com
 	public List<Comment> findByUserName(String userName) {
 		Query query = getSession().createQuery("from Comment where user.userName = :userName");
 		query.setParameter("userName", userName);
+		query.setCacheable(true);
 		return (List<Comment>) query.list();
 
 	}

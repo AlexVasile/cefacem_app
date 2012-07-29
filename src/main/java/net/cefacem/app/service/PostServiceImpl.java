@@ -1,5 +1,6 @@
 package net.cefacem.app.service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class PostServiceImpl implements PostService {
 	private PostDAO postDao;
 	@Autowired 
 	private UserDAO userDao;
+	@Autowired
+	private PostSimpleComparator simpleComp;
 
 	public long addPost(Post post, String creatorUserName) {
 		User user = userDao.findByUsername(creatorUserName);
@@ -45,12 +48,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public List<Post> findAllPosts() {
-		return postDao.findAll();
-	}
-
-	public List<Post> findAllPostsOfUser(String userName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> allPosts = postDao.findAll();
+		//calculate score for every post
+		
+		Collections.sort(allPosts, simpleComp);
+		return allPosts;
 	}
 
 }

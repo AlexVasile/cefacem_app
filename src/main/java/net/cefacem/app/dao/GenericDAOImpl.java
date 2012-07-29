@@ -53,7 +53,8 @@ public abstract class GenericDAOImpl<E, PK extends Serializable>
 	
 	@SuppressWarnings("unchecked")
 	public List<E> findAll() {
-		Query query = getSession().createQuery("from " + getEntityClass().getName());
+		Query query = getSession().createQuery("from " + getEntityClass().getName())
+				.setCacheable(true);
 		return (List<E>) query.list();
 	}
 	

@@ -3,6 +3,8 @@ package net.cefacem.app.service;
 import java.util.List;
 
 import net.cefacem.app.dao.UserDAO;
+import net.cefacem.app.model.Comment;
+import net.cefacem.app.model.Post;
 import net.cefacem.app.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			throw new UsernameNotFoundException("No user with username '" + username + "' found!");
 		}
 		return assembler.buildSecurityUser(user);	
+	}
+
+	public List<Post> getAllUserPosts(String username) {
+		User user = userDao.findByUsername(username);
+		System.out.println(user.getPostsList().size());
+		return user.getPostsList();
+	}
+
+	public List<Comment> getAllUserComments(String username) {
+		User user = userDao.findByUsername(username);
+		System.out.println(user.getCommentsList().size());
+		return user.getCommentsList();
 	}
 	
 }

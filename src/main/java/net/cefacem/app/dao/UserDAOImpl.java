@@ -16,6 +16,7 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 	public User findByUsername(String username) {
 		Query query = getSession().createQuery("from User where userName = :user");
 		query.setParameter("user", username);
+		query.setCacheable(true);
 		return (User) query.uniqueResult();
 	}
 	

@@ -22,7 +22,8 @@
 		<a id="signup" href="/cefacem/signup"> <fmt:message key="label.signup"/> </a> |
 	</c:if>
 	<c:if test="${not empty logged_user}">
-		${logged_user} | <a id="logout" href="/cefacem/j_spring_security_logout"> 
+		<a href="/cefacem/user/${logged_user}"> ${logged_user} </a>| 
+		<a id="logout" href="/cefacem/j_spring_security_logout"> 
 			<fmt:message key="label.logout"/> </a> |
 	</c:if>
 	

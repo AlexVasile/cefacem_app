@@ -15,6 +15,5 @@ public interface PostService {
 	public void delete(Post post);
 	public Post findById(long id);
 	public List<Post> findAllPosts();
-	public List<Post> findAllPostsOfUser(String userName);
 	
 }
