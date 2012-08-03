@@ -15,5 +15,8 @@ public interface PostService {
 	public void delete(Post post);
 	public Post findById(long id);
 	public List<Post> findAllPosts();
+	public List<Post> findActivePosts();
+	public List<Post> findInactivePosts();
+	public void updateScores();
 	
 }

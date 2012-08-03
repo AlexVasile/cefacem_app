@@ -12,6 +12,6 @@ public class LanguageController {
 	@RequestMapping(value="/change_language", method=RequestMethod.GET)
 	public String changeLanguage(HttpServletRequest request) {
 		String referer = request.getHeader("Referer");
-	    return "redirect:"+ referer;
+	    return "redirect:" + referer;
 	}
 }

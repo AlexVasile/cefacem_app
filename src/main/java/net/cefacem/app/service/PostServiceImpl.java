@@ -10,6 +10,7 @@ import net.cefacem.app.model.Post;
 import net.cefacem.app.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +21,9 @@ public class PostServiceImpl implements PostService {
 	@Autowired 
 	private UserDAO userDao;
 	@Autowired
-	private PostSimpleComparator simpleComp;
+	private PostComparatorBySimpleScore simpleComp;
+	@Autowired
+	private PostComparatorByDate dateComp;
 
 	public long addPost(Post post, String creatorUserName) {
 		User user = userDao.findByUsername(creatorUserName);
@@ -48,11 +51,34 @@ public class PostServiceImpl implements PostService {
 	}
 
 	public List<Post> findAllPosts() {
-		List<Post> allPosts = postDao.findAll();
-		//calculate score for every post
-		
-		Collections.sort(allPosts, simpleComp);
-		return allPosts;
+		return postDao.findAll();
+	}
+	
+	@Scheduled(fixedDelay=60000) // 1 minutes
+	public void updateScores() {
+		System.out.println("update the score");
+		List<Post> posts = postDao.findActivePosts();
+		Date now = new Date();
+		for (Post p : posts)
+			if(p.getEventDateTime().before(now)) 
+				p.setActive(false);
+			else {
+				//update score
+				
+			}
 	}
 
+	@Override
+	public List<Post> findActivePosts() {
+		List<Post> activePosts = postDao.findActivePosts();
+		Collections.sort(activePosts, simpleComp);
+		return activePosts;
+	}
+
+	@Override
+	public List<Post> findInactivePosts() {
+		List<Post> inactivePosts = postDao.findInactivePosts();
+		Collections.sort(inactivePosts, dateComp);
+		return inactivePosts;
+	}
 }

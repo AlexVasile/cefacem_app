@@ -35,6 +35,7 @@ public class PostController {
 	
 	@RequestMapping(value="/post", method=RequestMethod.GET)
 	public String onGetPostForm(Model model) {
+		
 		model.addAttribute("post", new Post());
 		return "post";
 	}
@@ -44,6 +45,7 @@ public class PostController {
 					BindingResult result, Principal principal) {
 		
 		if (result.hasErrors()) {
+			//validate the date of the event
 			return "post";
 		}
 		else {
@@ -52,20 +54,9 @@ public class PostController {
 		}
 	}
 	
-//	@RequestMapping(value="/posts/{id:\\d+}", method=RequestMethod.GET)
-//	public String postPermalink(@PathVariable long id, Model model, Principal principal) {
-//		Post post = postService.findById(id);
-//		if (post != null) {
-//			model.addAttribute("post", post);
-//			model.addAttribute("logged_user", principal.getName());
-//			return "post_view";
-//		}
-//		else
-//			return "404";
-//	}
-	
 	@RequestMapping(value="/posts/{id:\\d+}/edit", method=RequestMethod.GET)
-	public String postEditOnGet(@PathVariable long id, Model model, Principal principal) {
+	public String editOnGet(@PathVariable long id, Model model, Principal principal) {
+		
 		Post post = postService.findById(id);
 		if (post != null) {
 			if (post.getUser().getUserName().equals(principal.getName())) {
@@ -80,7 +71,7 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/posts/{id:\\d+}/edit", method=RequestMethod.POST)
-	public String postEditOnPost(@PathVariable long id, Model model, Principal principal,
+	public String editOnPost(@PathVariable long id, Model model, Principal principal,
 								@Valid Post editedPost, BindingResult result) {
 		
 		Post oldPost = postService.findById(id);

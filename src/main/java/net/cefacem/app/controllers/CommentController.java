@@ -25,8 +25,10 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
+	//post permalink and comments view
 	@RequestMapping(value={"/posts/{id:\\d+}/comments", "/posts/{id:\\d+}"}, method=RequestMethod.GET)
 	public String onGetComments(@PathVariable long id, Model model, Principal principal) {
+		
 		Post post = postService.findById(id);
 		if (post != null) {
 			model.addAttribute("logged_user", principal.getName());
@@ -39,6 +41,7 @@ public class CommentController {
 			return "404";
 	}
 	
+	//new comment posted
 	@RequestMapping(value={"/posts/{postId:\\d+}/comments", "/posts/{postId:\\d+}"}, method=RequestMethod.POST)
 	public String onPostComment(@PathVariable long postId, Model model, 
 				@Valid Comment newComment, BindingResult result, Principal principal) {
@@ -60,6 +63,7 @@ public class CommentController {
 			return "404";
 	}
 	
+	//comment edit page
 	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}/edit",
 					method=RequestMethod.GET)
 	public String onGetCommentEdit(@PathVariable long postId, @PathVariable long commentId, 
@@ -82,6 +86,7 @@ public class CommentController {
 			return "404";
 	}
 	
+	//posting edited comment
 	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}/edit", 
 						method=RequestMethod.POST)
 	public String onPostCommentEdit(@PathVariable long postId, @PathVariable long commentId,
@@ -105,6 +110,7 @@ public class CommentController {
 			return "404";
 	}
 
+	//comment permalink
 	@RequestMapping(value="/posts/{postId:\\d+}/comments/{commentId:\\d+}", method=RequestMethod.GET)
 	public String commentPermalink(@PathVariable long postId, @PathVariable long commentId, 
 									Model model, Principal principal) {

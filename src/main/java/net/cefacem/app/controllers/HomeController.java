@@ -30,9 +30,9 @@ public class HomeController {
 		
 		if (principal != null)
 			model.addAttribute("logged_user", principal.getName());
-		List<Post> posts = postService.findAllPosts();
+		List<Post> posts = postService.findActivePosts();
 		int n = posts.size();
-		if (n < PAGE_LENGTH) { 
+		if (n <= PAGE_LENGTH) { 
 			model.addAttribute("posts", posts.subList(0, n));
 			model.addAttribute("prev", "n");
 			model.addAttribute("next", "n");
@@ -53,7 +53,7 @@ public class HomeController {
 		
 		if (principal != null)
 			model.addAttribute("logged_user", principal.getName());
-		List<Post> posts = postService.findAllPosts();
+		List<Post> posts = postService.findActivePosts();
 		int n = posts.size();
 		
 		if (start <= 0) {

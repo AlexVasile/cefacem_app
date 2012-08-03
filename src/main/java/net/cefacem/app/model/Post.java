@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -36,6 +35,7 @@ public class Post {
 	private int votesDown = 0;
 	private int simpleScore = 0;  //votesUp - votesDown
 	private double score = 0;
+	private boolean active = true;
 	private Date creationDate = new Date();
 	private Date lastEdited;
 	private List<Comment> commentsList = new ArrayList<Comment>();
@@ -72,7 +72,6 @@ public class Post {
 	@Column (name="event_date_time", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull(message="{validation.notblank}")
-	@Future(message="{validation.date.future}")
 	public Date getEventDateTime() {
 		return eventDateTime;
 	}
@@ -127,6 +126,14 @@ public class Post {
 	}
 	public void setScore(double score) {
 		this.score = score;
+	}
+	
+	@Column (name="active")
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	@OneToMany (mappedBy="post")
