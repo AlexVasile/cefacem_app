@@ -2,8 +2,11 @@ package net.cefacem.app.service;
 
 import java.util.Comparator;
 
+import org.springframework.stereotype.Service;
+
 import net.cefacem.app.model.Post;
 
+@Service
 public class PostComparatorByScore implements Comparator<Post> {
 
 	@Override

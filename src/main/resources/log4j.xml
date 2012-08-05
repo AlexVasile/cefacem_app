@@ -10,10 +10,20 @@
 		</layout>
 	</appender>
 	
+	<appender name="file" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/cefacem/cefacem_app.log" />
+		<param name="MaxFileSize" value="1MB"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
+		</layout>
+	</appender>
+	
 	<!-- Application Loggers -->
-	<logger name="net.cefacem.test1">
+	<!--
+	<logger name="net.cefacem.app">
 		<level value="info" />
 	</logger>
+	-->
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -34,8 +44,9 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
+		<appender-ref ref="file" />
 	</root>
 	
 </log4j:configuration>

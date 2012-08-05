@@ -31,7 +31,7 @@ public class VoteController {
 		if (post != null) {
 			voteService.doVote(id, principal.getName(), voteType);
 			String referer = request.getHeader("Referer");
-			return "redirect:"+ referer;
+			return "redirect:" + referer;
 		}
 		else
 			return "404";

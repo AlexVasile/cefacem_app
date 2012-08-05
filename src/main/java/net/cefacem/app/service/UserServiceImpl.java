@@ -7,6 +7,8 @@ import net.cefacem.app.model.Comment;
 import net.cefacem.app.model.Post;
 import net.cefacem.app.model.User;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service(value="userServiceImpl")
 public class UserServiceImpl implements UserService, UserDetailsService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	private UserDAO userDao;
@@ -75,13 +79,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	public List<Post> getAllUserPosts(String username) {
 		User user = userDao.findByUsername(username);
-		System.out.println(user.getPostsList().size());
+		logger.info(user.getUserName() + " get all posts, size: " + user.getPostsList().size());
 		return user.getPostsList();
 	}
 
 	public List<Comment> getAllUserComments(String username) {
 		User user = userDao.findByUsername(username);
-		System.out.println(user.getCommentsList().size());
+		logger.info(user.getUserName() + " get all comments, size: " + user.getCommentsList().size());
 		return user.getCommentsList();
 	}
 	

@@ -1,9 +1,12 @@
 package net.cefacem.app.controllers;
 
 import java.security.Principal;
+import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import net.cefacem.app.model.Comment;
 import net.cefacem.app.model.Post;
 import net.cefacem.app.service.CommentService;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CommentController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
 	private PostService postService;
@@ -79,8 +84,10 @@ public class CommentController {
 				model.addAttribute("comment", comment);
 				return "comment_edit";
 			}
-			else 
+			else {
+				logger.warn("NO Permission: " + principal.getName() + ". " + new Date().toString());
 				return "redirect:/no_permission_to_edit";
+			}
 		}
 		else 
 			return "404";

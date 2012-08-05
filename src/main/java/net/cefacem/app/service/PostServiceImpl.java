@@ -9,12 +9,16 @@ import net.cefacem.app.dao.UserDAO;
 import net.cefacem.app.model.Post;
 import net.cefacem.app.model.User;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PostServiceImpl implements PostService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 	
 	@Autowired
 	private PostDAO postDao;
@@ -56,7 +60,7 @@ public class PostServiceImpl implements PostService {
 	
 	@Scheduled(fixedDelay=60000) // 1 minutes
 	public void updateScores() {
-		System.out.println("update the score");
+		logger.info("Update posts scores; " + new Date().toString());
 		List<Post> posts = postDao.findActivePosts();
 		Date now = new Date();
 		for (Post p : posts)
