@@ -1,0 +1,4 @@
+
+Social web aplication where users post events where they will go or would like to go in the near future. Users can comment and vote on other users posts. This activity will show which are the most popular and exciting events in that day. The goal of the aplication is to help people to decide how to spend their free time around the city of Bucharest.
+
+Technologies used on the back end: Spring, Spring MVC, Hibernate, MySQL. 
