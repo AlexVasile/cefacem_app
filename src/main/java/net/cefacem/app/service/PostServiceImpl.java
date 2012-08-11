@@ -72,14 +72,12 @@ public class PostServiceImpl implements PostService {
 			}
 	}
 
-	@Override
 	public List<Post> findActivePosts() {
 		List<Post> activePosts = postDao.findActivePosts();
 		Collections.sort(activePosts, simpleComp);
 		return activePosts;
 	}
 
-	@Override
 	public List<Post> findInactivePosts() {
 		List<Post> inactivePosts = postDao.findInactivePosts();
 		Collections.sort(inactivePosts, dateComp);

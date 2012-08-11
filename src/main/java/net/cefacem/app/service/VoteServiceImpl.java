@@ -35,12 +35,10 @@ public class VoteServiceImpl implements VoteService {
 			if (voteType.equals(Vote.VOTE_UP)) {
 				post.setVotesUp(post.getVotesUp() + 1);
 				post.setSimpleScore(post.getSimpleScore() + 1);
-				//calculate new score for post ranking
 			}
 			else if (voteType.equals(Vote.VOTE_DOWN)) {
 				post.setVotesDown(post.getVotesDown() + 1);
 				post.setSimpleScore(post.getSimpleScore() - 1);
-				//calculate new score
 			}
 			
 			return post.getSimpleScore();
@@ -51,12 +49,10 @@ public class VoteServiceImpl implements VoteService {
 			if (voteType.equals(Vote.VOTE_UP)) {
 				post.setVotesUp(post.getVotesUp() - 1);
 				post.setSimpleScore(post.getSimpleScore() - 1);
-				//calculate score
 			}
 			else if (voteType.equals(Vote.VOTE_DOWN)) {
 				post.setVotesDown(post.getVotesDown() - 1);
 				post.setSimpleScore(post.getSimpleScore() + 1);
-				//calculate score
 			}
 			
 			return post.getSimpleScore();
